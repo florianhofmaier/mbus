@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <RootNamespace>Mbus.Frames</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <Compile Include="Adresses.fs" />
+        <Compile Include="Layers\Ell.fs" />
+        <Compile Include="Layers\Tpl.fs" />
+        <Compile Include="Layers\Apl.fs" />
+        <Compile Include="MbusFrames.fs" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\BaseParsers\BaseParsers.fsproj" />
+      <ProjectReference Include="..\Records\Records.fsproj" />
+    </ItemGroup>
+
+</Project>

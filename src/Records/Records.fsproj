@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <IsPackable>false</IsPackable>
+        <GenerateProgramFile>false</GenerateProgramFile>
+        <RootNamespace>Mbus.Records</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Compile Include="Values.fs" />
+      <Compile Include="InfoBlock.fs" />
+      <Compile Include="DataInfoBlocks\FunctionFields.fs" />
+      <Compile Include="DataInfoBlocks\StorageNumbers.fs" />
+      <Compile Include="DataInfoBlocks\Tariffs.fs" />
+      <Compile Include="DataInfoBlocks\SubUnits.fs" />
+      <Compile Include="DataInfoBlocks\DibParser.fs" />
+      <Compile Include="DataInfoBlocks\DibWriter.fs" />
+      <Compile Include="VifDef.fs" />
+      <Compile Include="Vib.fs" />
+      <Compile Include="VibWriter.fs" />
+      <Compile Include="Records.fs" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\BaseWriters\BaseWriters.fsproj" />
+      <ProjectReference Include="..\BaseParsers\BaseParsers.fsproj" />
+      <ProjectReference Include="..\BaseWriters\BaseWriters.fsproj" />
+      <ProjectReference Include="..\PublicTypes\PublicTypes.fsproj" />
+    </ItemGroup>
+
+</Project>

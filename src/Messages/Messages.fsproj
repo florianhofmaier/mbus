@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <RootNamespace>Mbus.Messages</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <Compile Include="Converters.fs" />
+        <Compile Include="RspUdParsers.fs" />
+        <Compile Include="RecordBuilders.fs" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\BaseParsers\BaseParsers.fsproj" />
+      <ProjectReference Include="..\BaseWriters\BaseWriters.fsproj" />
+      <ProjectReference Include="..\Frames\Frames.fsproj" />
+      <ProjectReference Include="..\Records\Records.fsproj" />
+    </ItemGroup>
+
+</Project>

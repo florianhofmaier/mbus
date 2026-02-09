@@ -51,7 +51,7 @@ let checkCrc start l : Parser<unit> =
         do! expectU8 expectedCrc "invalid checksum"
     }
 
-let private parseLongFrameHeader : Parser<int * int> =
+let parseLongFrameHeader : Parser<int * int> =
     parser {
         let parseStartByte = expectU8 Frame.longFrameStartByte "invalid start byte"
         do! parseStartByte

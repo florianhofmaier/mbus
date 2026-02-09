@@ -16,7 +16,6 @@
 
     <ItemGroup>
         <ProjectReference Include="..\MessagesBuilders.Csharp\MessagesBuilders.Csharp.csproj" />
-        <ProjectReference Include="..\Messages.Api\Messages.Api.csproj" />
         <ProjectReference Include="..\Messages\Messages.fsproj" />
         <ProjectReference Include="..\PublicTypes\PublicTypes.fsproj" />
         <ProjectReference Include="..\Messages\Messages.fsproj" />

@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# 
+#
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "BaseParsers", "BaseParsers\BaseParsers.fsproj", "{35C109E5-979A-4BEC-A8F8-B4DAB502AABD}"
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "BaseParsers.Tests", "BaseParsers.Tests\BaseParsers.Tests.fsproj", "{C951900F-0AAB-49FB-8E91-1B85EE04E2C1}"
@@ -28,6 +28,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Messages.Csharp.Tests", "Messages.Csharp.Tests\Messages.Csharp.Tests.csproj", "{4C9F8B93-02C0-411A-8AC8-4A219C4B89D8}"
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Io", "Io\Io.fsproj", "{70F142CD-37EC-409A-B2D9-38CA4ADA5B41}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Io.Tests", "Io.Tests\Io.Tests.fsproj", "{4D9C6AC2-E38E-4AEA-A2F3-EADB61FE6326}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -95,5 +97,9 @@ Global
 		{70F142CD-37EC-409A-B2D9-38CA4ADA5B41}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{70F142CD-37EC-409A-B2D9-38CA4ADA5B41}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{70F142CD-37EC-409A-B2D9-38CA4ADA5B41}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D9C6AC2-E38E-4AEA-A2F3-EADB61FE6326}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D9C6AC2-E38E-4AEA-A2F3-EADB61FE6326}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D9C6AC2-E38E-4AEA-A2F3-EADB61FE6326}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D9C6AC2-E38E-4AEA-A2F3-EADB61FE6326}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

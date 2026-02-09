@@ -15,7 +15,7 @@ let private writeCrc start len : Writer<unit> =
         do! writeU8 crc
     }
 
-let writeShortFrame shortFrame : Writer<unit> =
+let writeShortFrame (shortFrame: ShortFrame) : Writer<unit> =
     writer {
         do! writeU8 Frame.shortFrameStartByte
         do! writeU8 shortFrame.CField

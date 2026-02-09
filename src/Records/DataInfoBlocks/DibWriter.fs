@@ -1,7 +1,8 @@
 module Mbus.Records.DataInfoBlocks.DibWriter
 
 open Mbus
-open Mbus.BaseWriters
+open Mbus.BaseWriters.BinaryWriters
+open Mbus.BaseWriters.Core
 open Mbus.Records
 
 let extPayload (stNum: int, tariff: int, subUnit: int) (i: int) : byte =
@@ -26,7 +27,7 @@ type private DibSpec =
       ExtCount: int
       Val: MbusValue }
 
-let private writeDif dibSpec: Writer =
+let private writeDif dibSpec: Writer<unit> =
     fun st0 ->
         let extBit = if dibSpec.ExtCount > 0 then 0x80uy else 0uy
         let difByte =
@@ -43,18 +44,19 @@ let private writeExtByte (dibSpec: DibSpec) (i: int) : byte =
     if moreFollows then payload ||| 0x80uy
     else payload &&& 0x7Fuy
 
-let private writeDife dibSpec : Writer =
+let private writeDife dibSpec : Writer<unit> =
     fun st0 ->
         if dibSpec.ExtCount = 0 then
-            Ok st0
+            Ok ((), st0)
         else
             let seed = dibSpec
             InfoBlock.writeExt seed writeExtByte st0
 
-let writeDib (fn: MbusFunctionField) (stNum: StorageNumber) (tariff: Tariff) (subUnit: SubUnit) (value: MbusValue) : Writer =
-    fun st0 ->
+let writeDib fn stNum tariff subUnit value  : Writer<unit> =
+    writer {
         let sn, tn, su = StorageNumber.value stNum, Tariff.value tariff, SubUnit.value subUnit
         let extByteCount = neededExtBytes sn tn su
         let dibSpec = { FuncField = fn; StNum = sn; Tariff = tn; SubUnit = su; ExtCount = extByteCount; Val = value }
-        writeDif dibSpec st0
-        |> Result.bind (writeDife dibSpec)
+        do! writeDif dibSpec
+        do! writeDife dibSpec
+    }

@@ -3,10 +3,13 @@
     <PropertyGroup>
         <TargetFramework>net9.0</TargetFramework>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <RootNamespace>Mbus.BaseWriters</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
-      <Compile Include="BaseWriters.fs" />
+      <Compile Include="Core.fs" />
+      <Compile Include="BinaryWriters.fs" />
+      <Compile Include="BcdWriters.fs" />
     </ItemGroup>
 
 </Project>

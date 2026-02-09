@@ -8,9 +8,9 @@ public class RecordBuilderTests
     [Scenario]
     public void Build_WhenInt32AndEnergyWattHours_ShouldReturnExpectedBytes()
     {
-        var builder = MbusRecordBuilder
+        var builder = new MbusRecordBuilder()
             .WithInt32(1234567890)
-            .AsEnergyWattHours(WattHoursScaler.Exp0);
+            .AsWattHours(WattHoursScaler.Exp0);
 
         var bytes = builder.Build();
 

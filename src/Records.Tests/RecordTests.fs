@@ -9,7 +9,7 @@ open Xunit
 open FsUnit.Xunit
 
 let PRec buf =
-    match Record.parseRecord { Off = 0; Buf = ReadOnlyMemory<uint8>(buf) } with
+    match Record.Parser.parseRecord { Off = 0; Buf = ReadOnlyMemory<uint8>(buf) } with
     | Ok (r, _) -> r
     | Error e -> failwithf $"Unexpected: %A{e}"
 
@@ -37,7 +37,7 @@ let ``parse mfr specific record with more follows`` () =
 [<Fact>]
 let ``parse invalid special function code`` () =
     let buf = [| 0x3Fuy |]
-    match Record.parseRecord { Off = 0; Buf = ReadOnlyMemory<uint8>(buf) } with
+    match Record.Parser.parseRecord { Off = 0; Buf = ReadOnlyMemory<uint8>(buf) } with
     | Error e -> e |> should equal { Pos = 0; Msg = "invalid special function code: 0x3F"; Ctx = [ "special function record" ] }
     | Ok (r, _) -> failwithf $"Expected error, got {r}"
 
@@ -45,7 +45,7 @@ let ``parse invalid special function code`` () =
 let ``parse data record`` () =
     let buf = [| 0x04uy; 0x13uy; 0x78uy; 0x56uy; 0x34uy; 0x12uy; |]
     match PRec buf with
-    | DataRecord r ->
+    | Data r ->
         r.Value |> should equal (Int32 0x12345678)
         r.Fn |> should equal MbusFunctionField.InstValue
         r.StNum |> should equal StorageNumber.zero

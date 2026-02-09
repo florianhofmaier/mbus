@@ -6,7 +6,9 @@ open System.Text
 open Mbus.BaseParsers.Core
 open Mbus.BaseParsers.BcdParsers
 open Mbus.BaseParsers.BinaryParsers
-open Mbus.BaseWriters
+open Mbus.BaseWriters.BcdWriters
+open Mbus.BaseWriters.BinaryWriters
+open Mbus.BaseWriters.Core
 
 type MbusValue =
     | NoData
@@ -25,33 +27,33 @@ type MbusValue =
     | VarLen of string
 
 module MbusValue =
-    let mask = 0x0Fuy
-    let noData = 0x00uy
-    let int8 = 0x01uy
-    let int16 = 0x02uy
-    let int24 = 0x03uy
-    let int32 = 0x04uy
-    let real32 = 0x05uy
-    let int48 = 0x06uy
-    let int64 = 0x07uy
-    let select = 0x08uy
-    let bcd2Digit = 0x09uy
-    let bcd4Digit = 0x0Auy
-    let bcd6Digit = 0x0Buy
-    let bcd8Digit = 0x0Cuy
-    let varLen = 0x0Duy
-    let bcd12Digit = 0x0Euy
+    let private mask = 0x0Fuy
+    let private noData = 0x00uy
+    let private int8 = 0x01uy
+    let private int16 = 0x02uy
+    let private int24 = 0x03uy
+    let private int32 = 0x04uy
+    let private real32 = 0x05uy
+    let private int48 = 0x06uy
+    let private int64 = 0x07uy
+    let private select = 0x08uy
+    let private bcd2Digit = 0x09uy
+    let private bcd4Digit = 0x0Auy
+    let private bcd6Digit = 0x0Buy
+    let private bcd8Digit = 0x0Cuy
+    let private varLen = 0x0Duy
+    let private bcd12Digit = 0x0Euy
 
-    let (|IsDataType|_|) expected b =
+    let private (|IsDataType|_|) expected b =
         if b &&& mask = expected then Some () else None
 
-    let parseLvar : P<int> = parser {
+    let private parseLvar : Parser<int> = parser {
         let! l = parseU8
         if l < 0xC0uy then return int l
         else return! fail $"unsupported LVAR: 0x{l:X2}"
     }
 
-    let parseVarLen : P<string> = parser {
+    let private parseVarLen : Parser<string> = parser {
         let! n = parseLvar
         let! bytes = takeMem n
         let arr = bytes.ToArray()
@@ -59,12 +61,12 @@ module MbusValue =
         return Encoding.UTF8.GetString(arr)
     }
 
-    let parseFloat32 : P<float32> = parser {
+    let private parseFloat32 : Parser<float32> = parser {
         let! b = takeMem 4
         return BinaryPrimitives.ReadSingleLittleEndian b.Span
     }
 
-    let parse b : P<MbusValue> = parser {
+    let parse b : Parser<MbusValue> = parser {
         match b with
         | IsDataType noData -> return NoData
         | IsDataType int8 -> return! parseI8 |>> Int8
@@ -101,44 +103,42 @@ module MbusValue =
         | Bcd12Digit _ -> bcd12Digit
         | VarLen _ -> varLen
 
-    let writeReal32 (x: float32) : Writer =
-        fun st0 ->
+    let private writeReal32 (x: float32) : Writer<unit> =
+        writer {
             let bytes = BitConverter.GetBytes(x)
             if not BitConverter.IsLittleEndian then Array.Reverse(bytes)
-            let mutable res = Ok st0
             for b in bytes do
-                res <- res |> Result.bind (writeU8 b)
-            res
+                do! writeU8 b
+        }
 
-    let writeVarLen (txt: string) : Writer =
-        fun st0 ->
+    let private writeVarLen (txt: string) : Writer<unit> =
+        writer {
             let raw = Encoding.UTF8.GetBytes(txt)
             if raw.Length > 0xBF then
-                err st0 $"VarLen too long for supported LVAR (len={raw.Length})"
+                return! fun st -> err st $"VarLen too long for supported LVAR (len={raw.Length})"
             else
                 let len = byte raw.Length
+                do! writeU8 len
                 let rev = Array.rev raw
-                writeU8 len st0
-                |> Result.bind (fun st ->
-                    let mutable res = Ok st
-                    for b in rev do
-                        res <- res |> Result.bind (writeU8 b)
-                    res)
+                for b in rev do
+                    do! writeU8 b
+        }
 
-    let write (v: MbusValue) : Writer =
-        fun st0 ->
-            match v with
-            | NoData -> Ok st0
-            | Int8 x -> writeI8 x st0
-            | Int16 x -> writeI16 x st0
-            | Int24 x -> writeI24 x st0
-            | Int32 x -> writeI32 x st0
-            | Int48 x -> writeI48 x st0
-            | Int64 x -> writeI64 x st0
-            | Real32 x -> writeReal32 x st0
-            | Bcd2Digit x -> writeBcdU8 x st0
-            | Bcd4Digit x -> writeBcdU16 x st0
-            | Bcd6Digit x -> writeBcdU24 x st0
-            | Bcd8Digit x -> writeBcdU32 x st0
-            | Bcd12Digit x -> writeBcdU48 x st0
-            | VarLen txt -> writeVarLen txt st0
+    let write (value: MbusValue) : Writer<unit> =
+        writer {
+            match value with
+            | NoData -> return ()
+            | Int8 x -> do! writeI8 x
+            | Int16 x -> do! writeI16 x
+            | Int24 x -> do! writeI24 x
+            | Int32 x -> do! writeI32 x
+            | Int48 x -> do! writeI48 x
+            | Int64 x -> do! writeI64 x
+            | Real32 x -> do! writeReal32 x
+            | Bcd2Digit x -> do! writeBcdU8 x
+            | Bcd4Digit x -> do! writeBcdU16 x
+            | Bcd6Digit x -> do! writeBcdU24 x
+            | Bcd8Digit x -> do! writeBcdU32 x
+            | Bcd12Digit x -> do! writeBcdU48 x
+            | VarLen txt -> do! writeVarLen txt
+        }

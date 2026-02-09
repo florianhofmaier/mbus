@@ -18,7 +18,6 @@
       <Compile Include="DataInfoBlocks\DibWriter.fs" />
       <Compile Include="VifDef.fs" />
       <Compile Include="Vib.fs" />
-      <Compile Include="VibWriter.fs" />
       <Compile Include="Records.fs" />
     </ItemGroup>
 

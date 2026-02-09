@@ -8,7 +8,7 @@ open Xunit
 open FsUnit.Xunit
 
 let PVib buf =
-    match Vib.parse { Off = 0; Buf = ReadOnlyMemory<uint8>(buf) } with
+    match Vib.Parser.parse { Off = 0; Buf = ReadOnlyMemory<uint8>(buf) } with
     | Ok (v, _) -> v
     | Error e -> failwithf $"Unexpected: %A{e}"
 

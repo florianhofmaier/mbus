@@ -14,7 +14,7 @@ let private parseExtByte (acc: Dife) i b : Dife =
     let su = acc.SubUnit ||| SubUnit.fromDife b i
     { StNum = sn; Tariff = tn; SubUnit = su }
 
-let private parseDife dif stNumSeed : P<Dife> = parser {
+let private parseDife dif stNumSeed : Parser<Dife> = parser {
     let seed = { StNum = stNumSeed; Tariff = 0u; SubUnit = 0us }
     if InfoBlock.isExtended dif then
         let! difeParsed = InfoBlock.parseExt seed parseExtByte
@@ -23,7 +23,7 @@ let private parseDife dif stNumSeed : P<Dife> = parser {
         return seed
 }
 
-let parse dif : P<MbusFunctionField * StorageNumber * Tariff * SubUnit> = parser {
+let parse dif : Parser<MbusFunctionField * StorageNumber * Tariff * SubUnit> = parser {
     let fn = FunctionField.fromDif dif
     let stNumSeed = uint64 (StorageNumber.fromDif dif)
     let! dife = parseDife dif stNumSeed

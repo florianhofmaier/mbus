@@ -9,6 +9,7 @@
     <ItemGroup>
         <Compile Include="Converters.fs" />
         <Compile Include="RspUdParsers.fs" />
+        <Compile Include="RspUdBuilder.fs" />
         <Compile Include="RecordBuilders.fs" />
     </ItemGroup>
 

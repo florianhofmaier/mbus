@@ -7,11 +7,20 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Compile Include="Adresses.fs" />
-        <Compile Include="Layers\Ell.fs" />
-        <Compile Include="Layers\Tpl.fs" />
-        <Compile Include="Layers\Apl.fs" />
-        <Compile Include="MbusFrames.fs" />
+        <Compile Include="CFields.fs" />
+        <Compile Include="AdressesParser.fs" />
+        <Compile Include="AddressWriter.fs" />
+        <Compile Include="Ell.fs" />
+        <Compile Include="StatusField.fs" />
+        <Compile Include="Tpl.fs" />
+        <Compile Include="TplParser.fs" />
+        <Compile Include="TplWriter.fs" />
+        <Compile Include="Apl.fs" />
+        <Compile Include="AplParser.fs" />
+        <Compile Include="AplWriter.fs" />
+        <Compile Include="Frame.fs" />
+        <Compile Include="FrameParser.fs" />
+        <Compile Include="FrameWriter.fs" />
     </ItemGroup>
 
     <ItemGroup>

@@ -16,14 +16,14 @@ namespace Mbus.Frames.Layers
 //         match ell with
 //         | Ell.Short _ -> 3
 //
-//     let private parseShort : P<EllShort> = parser {
+//     let private parseShort : Parser<EllShort> = parser {
 //         do! skip 1
 //         let! cc = parseU8
 //         let! acc = parseU8
 //         return { CcField = cc; AccField = acc }
 //     }
 //
-//     let parseOpt : P<Ell option> = parser {
+//     let parseOpt : Parser<Ell option> = parser {
 //         let! ci = peekU8
 //         match ci with
 //         | _ when ci = ciShort ->

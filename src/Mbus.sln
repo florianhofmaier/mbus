@@ -1,5 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
+# 
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "BaseParsers", "BaseParsers\BaseParsers.fsproj", "{35C109E5-979A-4BEC-A8F8-B4DAB502AABD}"
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "BaseParsers.Tests", "BaseParsers.Tests\BaseParsers.Tests.fsproj", "{C951900F-0AAB-49FB-8E91-1B85EE04E2C1}"
@@ -16,13 +17,18 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "PublicTypes", "PublicTypes\
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Messages", "Messages\Messages.fsproj", "{2253CAE8-F995-4CA8-9592-0E67B1E3CEBB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Messages.Api.Test", "Messages.Api.Test\Messages.Api.Test.csproj", "{27EE8514-20BB-4313-9D47-18B8341ECF40}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessagesBuilders.Csharp.Tests", "MessagesBuilders.Csharp.Tests\MessagesBuilders.Csharp.Tests.csproj", "{27EE8514-20BB-4313-9D47-18B8341ECF40}"
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "BaseWriters", "BaseWriters\BaseWriters.fsproj", "{9294F8A8-363F-4F39-B024-905BF1A420C8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Messages.Api", "Messages.Api\Messages.Api.csproj", "{ED9431D6-0111-400D-B8F8-C9F490C6AC1A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessagesBuilders.Csharp", "MessagesBuilders.Csharp\MessagesBuilders.Csharp.csproj", "{ED9431D6-0111-400D-B8F8-C9F490C6AC1A}"
 EndProject
-
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "BaseWriters.Tests", "BaseWriters.Tests\BaseWriters.Tests.fsproj", "{E3487FD5-6C2B-4342-B78C-599FDA12D7C3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Messages.Csharp.Tests", "Messages.Csharp.Tests\Messages.Csharp.Tests.csproj", "{4C9F8B93-02C0-411A-8AC8-4A219C4B89D8}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Io", "Io\Io.fsproj", "{70F142CD-37EC-409A-B2D9-38CA4ADA5B41}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -77,5 +83,17 @@ Global
 		{ED9431D6-0111-400D-B8F8-C9F490C6AC1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ED9431D6-0111-400D-B8F8-C9F490C6AC1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ED9431D6-0111-400D-B8F8-C9F490C6AC1A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E3487FD5-6C2B-4342-B78C-599FDA12D7C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E3487FD5-6C2B-4342-B78C-599FDA12D7C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E3487FD5-6C2B-4342-B78C-599FDA12D7C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E3487FD5-6C2B-4342-B78C-599FDA12D7C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C9F8B93-02C0-411A-8AC8-4A219C4B89D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C9F8B93-02C0-411A-8AC8-4A219C4B89D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C9F8B93-02C0-411A-8AC8-4A219C4B89D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C9F8B93-02C0-411A-8AC8-4A219C4B89D8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{70F142CD-37EC-409A-B2D9-38CA4ADA5B41}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70F142CD-37EC-409A-B2D9-38CA4ADA5B41}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70F142CD-37EC-409A-B2D9-38CA4ADA5B41}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70F142CD-37EC-409A-B2D9-38CA4ADA5B41}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

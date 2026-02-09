@@ -3,7 +3,7 @@ module Mbus.BaseParsers.BcdParsers
 open Mbus.BaseParsers.Core
 open Mbus.BaseParsers.BinaryParsers
 
-let parseBcd2Digit: P<uint8> =
+let parseBcd2Digit: Parser<uint8> =
     parser {
         let! b = parseU8
         let lowNibble = b &&& 0x0Fuy
@@ -14,14 +14,14 @@ let parseBcd2Digit: P<uint8> =
             return! failBefore $"invalid BCD byte: 0x{b:X2}"
     }
 
-let parseBcd4Digit: P<uint16> =
+let parseBcd4Digit: Parser<uint16> =
     parser {
         let! b0 = parseBcd2Digit
         let! b1 = parseBcd2Digit
         return uint16 b0 + (uint16 b1 * 100us)
     }
 
-let parseBcd6Digit: P<uint32> =
+let parseBcd6Digit: Parser<uint32> =
     parser {
         let! b0 = parseBcd2Digit
         let! b1 = parseBcd2Digit
@@ -29,14 +29,14 @@ let parseBcd6Digit: P<uint32> =
         return uint32 b0 + (uint32 b1 * 100u) + (uint32 b2 * 10000u)
     }
 
-let parseBcd8Digit : P<uint32> =
+let parseBcd8Digit : Parser<uint32> =
     parser {
         let! n0 = parseBcd4Digit
         let! n1 = parseBcd4Digit
         return uint32 n0 + (uint32 n1 * 10000u)
     }
 
-let parseBcd12Digit : P<uint64> =
+let parseBcd12Digit : Parser<uint64> =
     parser {
         let! n0 = parseBcd4Digit
         let! n1 = parseBcd4Digit

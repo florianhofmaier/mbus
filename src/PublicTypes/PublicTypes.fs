@@ -73,6 +73,24 @@ type MbusAddress private (idNumber: int, mfr: string, version: int, deviceType: 
         | Ok adr -> adr
         | Error msg -> MbusError msg |> raise
 
+type MbusApplicationError =
+    | NoError = 0uy
+    | ApplicationBusy = 1uy
+    | AnyApplicationError = 2uy
+    | AbnormalCondition = 3uy
+
+type MbusStatusField =
+    { ApplicationError : MbusApplicationError
+      PowerLow : bool
+      PermanentError : bool
+      TemporaryError : bool }
+
+    static member CreateEmpty=
+        { ApplicationError = MbusApplicationError.NoError
+          PowerLow = false
+          PermanentError = false
+          TemporaryError = false }
+
 type MbusDataType =
     | NoData
     | Bcd2Digit
@@ -265,43 +283,43 @@ type MbusUnit =
     | CubicFeet
     | Bar
 
-module MbusUnit =
-    let toText unit =
-        match unit with
-        | NoUnit -> ""
-        | WattHours -> "Wh"
-        | Watt -> "W"
-        | JoulesPerHour -> "J/h"
-        | Joules -> "J"
-        | Celsius -> "°C"
-        | CubicMeters -> "m³"
-        | CubicMetersPerSecond -> "m³/s"
-        | CubicMetersPerMinute -> "m³/minutes"
-        | CubicMetersPerHour -> "m³/h"
-        | Kelvin -> "K"
-        | KiloGrams -> "kg"
-        | KiloGramsPerHour -> "kg/h"
-        | Tons -> "t"
-        | Seconds -> "s"
-        | Days -> "d"
-        | Minutes -> "minutes"
-        | Hours -> "h"
-        | KiloBitsPerSecond -> "kbps"
-        | Months -> "months"
-        | Years -> "years"
-        | Volts -> "V"
-        | Amps -> "A"
-        | DecibelMilliWatts -> "dBm"
-        | Calories -> "Cal"
-        | VoltAmpereReactiveHours -> "VARh"
-        | VoltAmpereHours -> "VAh"
-        | VoltAmpereReactive -> "VAR"
-        | VoltAmpere -> "VA"
-        | Percent -> "%"
-        | CubicFeet -> "feet³"
-        | Degrees -> "°"
-        | Hertz -> "Hz"
-        | Bar -> "bar"
+// module MbusUnit =
+//     let toText unit =
+//         match unit with
+//         | NoUnit -> ""
+//         | WattHours -> "Wh"
+//         | Watt -> "W"
+//         | JoulesPerHour -> "J/h"
+//         | Joules -> "J"
+//         | Celsius -> "°C"
+//         | CubicMeters -> "m³"
+//         | CubicMetersPerSecond -> "m³/s"
+//         | CubicMetersPerMinute -> "m³/minutes"
+//         | CubicMetersPerHour -> "m³/h"
+//         | Kelvin -> "K"
+//         | KiloGrams -> "kg"
+//         | KiloGramsPerHour -> "kg/h"
+//         | Tons -> "t"
+//         | Seconds -> "s"
+//         | Days -> "d"
+//         | Minutes -> "minutes"
+//         | Hours -> "h"
+//         | KiloBitsPerSecond -> "kbps"
+//         | Months -> "months"
+//         | Years -> "years"
+//         | Volts -> "V"
+//         | Amps -> "A"
+//         | DecibelMilliWatts -> "dBm"
+//         | Calories -> "Cal"
+//         | VoltAmpereReactiveHours -> "VARh"
+//         | VoltAmpereHours -> "VAh"
+//         | VoltAmpereReactive -> "VAR"
+//         | VoltAmpere -> "VA"
+//         | Percent -> "%"
+//         | CubicFeet -> "feet³"
+//         | Degrees -> "°"
+//         | Hertz -> "Hz"
+//         | Bar -> "bar"
 
 [<AbstractClass>]
 type MbusRecordBase(unit: MbusUnit, fn: MbusFunctionField, storageNum: int, tariff: int, subUnit: int) =
@@ -332,3 +350,15 @@ type WattHoursScaler =
     | Exp4 = 7
     | Exp5 = 8
     | Exp6 = 9
+
+type CubicMetersScaler =
+    | ExpMinus6 = 0
+    | ExpMinus5 = 1
+    | ExpMinus4 = 2
+    | ExpMinus3 = 3
+    | ExpMinus2 = 4
+    | ExpMinus1 = 5
+    | Exp0 = 6
+    | Exp1 = 7
+    | Exp2 = 8
+    | Exp3 = 9

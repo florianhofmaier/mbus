@@ -10,6 +10,7 @@
     <ItemGroup>
         <Compile Include="SlidingWindowTests.fs" />
         <Compile Include="StreamReaderTests.fs" />
+        <Compile Include="StreamWriterTests.fs" />
     </ItemGroup>
 
     <ItemGroup>

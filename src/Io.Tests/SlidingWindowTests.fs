@@ -1,6 +1,7 @@
 module Mbus.Io.Tests.SlidingWindowTests
 
 open Xunit
+open FsUnit.Xunit
 open Shouldly
 open System.IO
 open System.Threading
@@ -11,7 +12,7 @@ open Mbus.Io
 let ``Constructor WhenCalled ShouldInitializeEmptyWindow`` () =
     use ms = new MemoryStream()
     let window = SlidingWindow(ms, 10)
-    window.Data.Length.ShouldBe(0)
+    window.Data.Length |> should equal 0
 
 [<Fact>]
 let ``FillAsync WhenStreamHasData ShouldFillBuffer`` () =
@@ -21,8 +22,8 @@ let ``FillAsync WhenStreamHasData ShouldFillBuffer`` () =
 
     window.FillAsync(CancellationToken.None).Wait()
 
-    window.Data.Length.ShouldBe(3)
-    window.Data.ToArray().ShouldBe(data)
+    window.Data.Length |> should equal 3
+    window.Data.ToArray() |> should equal data
 
 [<Fact>]
 let ``Advance WhenCalled ShouldUpdateOffsetAndCount`` () =

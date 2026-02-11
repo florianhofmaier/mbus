@@ -57,7 +57,7 @@ type MbusAddress private (idNumber: int, mfr: string, version: int, deviceType: 
     override this.GetHashCode() =
         HashCode.Combine(idNumber, mfr, version, deviceType)
 
-    static member TryCreate id mfr version deviceType : Result<MbusAddress, string> =
+    static member Create id mfr version deviceType : Result<MbusAddress, string> =
         if id < 0 || id > 99999999 then
             Error $"Invalid ID number: {id}, must be between 0 and 99999999"
         elif String.length mfr<> 3 then
@@ -67,11 +67,6 @@ type MbusAddress private (idNumber: int, mfr: string, version: int, deviceType: 
         elif version < 0 || version > 255 then
             Error $"Invalid version: {version}, must be between 0 and 255"
         else MbusAddress(id, mfr, version, deviceType) |> Ok
-
-    static member Create id mfr version deviceType =
-        match MbusAddress.TryCreate id mfr version deviceType with
-        | Ok adr -> adr
-        | Error msg -> MbusError msg |> raise
 
 type MbusApplicationError =
     | NoError = 0uy

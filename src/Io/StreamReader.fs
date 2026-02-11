@@ -49,9 +49,8 @@ module StreamReader =
             | LongFrame res -> res
             | _ -> Invalid
 
-    let create (stream: Stream) (bufferSize: int option) =
-        let size = defaultArg bufferSize 4096
-        let window = SlidingWindow(stream, size)
+    let create (stream: Stream) bufferSize =
+        let window = SlidingWindow(stream, bufferSize)
 
         fun (ct: CancellationToken) -> task {
             let mutable frame = Unchecked.defaultof<Frame>

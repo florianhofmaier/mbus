@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <RootNamespace>Mbus</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Messages\Messages.fsproj" />
+      <ProjectReference Include="..\PublicTypes\PublicTypes.fsproj" />
+      <ProjectReference Include="..\Records\Records.fsproj" />
+      <ProjectReference Include="..\Devices\Devices.fsproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="FSharp.Core" Version="9.0.100" />
+    </ItemGroup>
+
+</Project>

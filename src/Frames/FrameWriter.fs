@@ -3,7 +3,7 @@ module Mbus.Frames.FrameWriter
 open Mbus.BaseWriters.BinaryWriters
 open Mbus.BaseWriters.Core
 
-let writeConfirmationFrame : Writer<unit> =
+let writeConfirmation: Writer<unit> =
     writer {
         do! writeU8 Frame.confirmationStartByte
     }
@@ -62,3 +62,8 @@ let writeLongFrame longFrame =
         do! writeU8 Frame.stopByte
     }
 
+let writeFrame frame =
+    match frame with
+    | Confirmation-> writeConfirmation
+    | ShortFrame sf -> writeShortFrame sf
+    | LongFrame lf -> writeLongFrame lf
